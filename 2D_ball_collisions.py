@@ -39,11 +39,18 @@ class Circle:
         self.x += self.velocity_x
         self.y += self.velocity_y
 
-        # bounce off walls
-        if self.x - self.radius <= 0 or self.x + self.radius >= width:
+        # bounce off walls, reposition to prevent getting stuck
+        if self.x - self.radius <= 0:
             self.velocity_x *= -1
-        if self.y - self.radius <= 0 or self.y + self.radius >= height:
+            self.x = self.radius
+        if self.x + self.radius >= width:
+            self.velocity_x *= -1
+            self.x = width - self.radius
+        if self.y - self.radius <= 0:
             self.velocity_y *= -1
+            self.y = self.radius
+        if self.y + self.radius >= height:
+            self.y = height - self.radius
 
         return self.x, self.y
 
